@@ -2,5 +2,6 @@ export default {
   username: String,
   password: String,
   firstname: String,
-  lastname: String
+  lastname: String,
+  code: String
 }
