@@ -2,12 +2,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import SpryJs, { EntityConfig } from "@codiks/spryjs";
-import Book from "./entities/book";
+import spryjs, { EntityConfig } from "@codiks/spryjs";
+import BookService from "./entities/book/service";
 import { MONGO_CS, TOKEN_SECRET, SALT, PORT } from "./constants"
 import userModel from "./entities/user.model";
-
-const spryjs = new SpryJs();
 
 /**Initialize SpryJs */
 spryjs.init(PORT).then((app) => {
@@ -29,8 +27,8 @@ spryjs.init(PORT).then((app) => {
    * Notice that some enpoints are protected for only authorized users
    */
   let bookConfig: EntityConfig = {
+    service: new BookService(),
     name: 'Book',
-    model: Book,
     path: 'bm',
     keyword: 'code',
     config: {
