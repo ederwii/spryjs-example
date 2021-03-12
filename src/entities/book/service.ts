@@ -7,6 +7,16 @@ const schema = new Schema(Book);
 const model = spryjs.createModel('Book', schema);
 
 export default class BookService implements IService {
+  async Read(body: any, params: any, query: any) {
+    const id = params.id;
+    console.log(id);
+    await model.findById(id).then((b) => {
+      b.reads++;
+      b.save();
+    });
+    return true;
+  }
+
   constructor(private service: BaseService = new BaseService(model, 'Book')) {
   }
   Get(): Promise<any[]> {
@@ -17,6 +27,7 @@ export default class BookService implements IService {
   }
   Create(payload: Partial<any>): Promise<any> {
     payload.name = `${payload.name} - visit mybook.com`;
+    payload.reads = 0;
     return this.service.Create(payload);
   }
   Delete(id: string): Promise<boolean> {

@@ -2,10 +2,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import spryjs, { EntityConfig } from "@codiks/spryjs";
-import BookService from "./entities/book/service";
+import spryjs from "@codiks/spryjs";
 import { MONGO_CS, TOKEN_SECRET, SALT, PORT } from "./constants"
 import userModel from "./entities/user.model";
+import config from "./entities/book/config";
 
 /**Initialize SpryJs */
 spryjs.init(PORT).then((app) => {
@@ -26,25 +26,8 @@ spryjs.init(PORT).then((app) => {
    * using Book entity for persistance.
    * Notice that some enpoints are protected for only authorized users
    */
-  let bookConfig: EntityConfig = {
-    service: new BookService(),
-    name: 'Book',
-    path: 'bm',
-    keyword: 'code',
-    config: {
-      /** Let's protect some endpoints to only authorized users.
-       * All other endpoints not mentioned in auth object will be non-protected
-       * and will not require a token in the authorization header
-      */
-      auth: {
-        post: true,
-        delete: true,
-        put: true
-      }
-    }
-  }
-
-  spryjs.registerEntity(bookConfig).then(() => {
+  spryjs.registerEntity(config).then(() => {
+    // All set! Full CRUD with custom routes has been created and registered.
   })
 })
 
