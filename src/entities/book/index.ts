@@ -3,7 +3,8 @@ export const Book = {
   description: String,
   color: String,
   code: String,
-  reads: Number
+  reads: Number,
+  registeredBy: String
 }
 
 export default Book;

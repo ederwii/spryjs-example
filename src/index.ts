@@ -3,8 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import spryjs from "@codiks/spryjs";
-import { MONGO_CS, TOKEN_SECRET, SALT, PORT } from "./constants"
-import userModel from "./entities/user.model";
+import { MONGO_CS, AUTH_CONFIG, PORT } from "./constants"
 import config from "./entities/book/config";
 
 /**Initialize SpryJs */
@@ -20,7 +19,7 @@ spryjs.init(PORT).then((app) => {
    * (username, password). POST action will act as the register endpoint. The body must contain a JSON object
    * with username and password variables. Once registered, 
    */
-  spryjs.useAuthentication(`${TOKEN_SECRET}`, `${SALT}`, userModel);
+  spryjs.useAuthentication(AUTH_CONFIG);
 
   /** Register Book entity. This will create the CRUD endpoints for /bm 
    * using Book entity for persistance.
@@ -28,6 +27,7 @@ spryjs.init(PORT).then((app) => {
    */
   spryjs.registerEntity(config).then(() => {
     // All set! Full CRUD with custom routes has been created and registered.
+    spryjs.mapUserProperty('code', 'book', 'registeredBy')
   })
 })
 
