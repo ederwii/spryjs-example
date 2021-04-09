@@ -9,14 +9,17 @@ let bookConfig: EntityConfig = {
   path: 'bm',
   keyword: 'code',
   config: {
-    /** Let's protect some endpoints to only authorized users.
-     * All other endpoints not mentioned in auth object will be non-protected
-     * and will not require a token in the authorization header
-    */
-    auth: {
-      post: true,
-      delete: true,
-      put: true
+    post: {
+      isPrivate: true
+    },
+    delete: {
+      isPrivate: true
+    },
+    put: {
+      isPrivate: true
+    },
+    patch: {
+      isDisabled: true
     }
   },
   routes: [{
